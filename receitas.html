@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <!-- Incluir folha de estilos do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo adicional para o catálogo */
+        #pnlCatalogo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            width: 250px;
+        }
+    </style>
+</head>
+<body class="bg-warning" onload="preencheCatalogo()">
+    <!-- Container principal -->
+    <div class="container-fluid">
+        <h1 class="text-center my-4">Catálogo de Receitas</h1>
+
+        <!-- Painel do catálogo -->
+        <div id="pnlCatalogo" class="d-flex flex-wrap"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Dados das receitas
+        const receitas = [
+            {
+                titulo: "Bolo de Cenoura",
+                imagem: "bolo_cenoura.png",
+                preparo: "Misture todos os ingredientes e asse por 30 minutos a 180ºC.",
+                ingredientes: ["3 cenouras médias", "3 ovos", "1/2 xícara de óleo", "2 xícaras de açúcar", "2 xícaras de farinha de trigo", "1 colher de fermento"]
+            },
+            {
+                titulo: "Pão Caseiro",
+                imagem: "pao_caseiro.png",
+                preparo: "Sove a massa e deixe descansar por 1 hora. Asse por 40 minutos a 200ºC.",
+                ingredientes: ["500g de farinha de trigo", "10g de fermento biológico seco", "1 colher de açúcar", "1 colher de sal", "300ml de água morna"]
+            },
+            {
+                titulo: "Brigadeiro",
+                imagem: "brigadeiro.png",
+                preparo: "Misture os ingredientes e cozinhe em fogo baixo até desgrudar da panela.",
+                ingredientes: ["1 lata de leite condensado", "2 colheres de chocolate em pó", "1 colher de manteiga", "Granulado para decorar"]
+            }
+        ];
+
+        // Função para gerar a lista de ingredientes
+        function getListaIngredientes(receita) {
+            return `<ul>` + receita.ingredientes
+                .map(ingrediente => `<li>${ingrediente}</li>`)
+                .reduce((acc, item) => acc + item, "") + `</ul>`;
+        }
+
+        // Função para gerar o card da receita
+        function getCard(receita) {
+            return `
+                <div class="card">
+                    <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                    <div class="card-body">
+                        <h5 class="card-title">${receita.titulo}</h5>
+                        <div class="card-text">
+                            ${getListaIngredientes(receita)}
+                            <hr>
+                            ${receita.preparo}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Função para preencher o catálogo com os cards das receitas
+        function preencheCatalogo() {
+            const pnlCatalogo = document.getElementById("pnlCatalogo");
+            pnlCatalogo.innerHTML = receitas
+                .map(receita => getCard(receita))
+                .reduce((html, card) => html + card, "");
+        }
+    </script>
+
+    <!-- Script do Bootstrap (opcional, para funcionalidade JavaScript) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
